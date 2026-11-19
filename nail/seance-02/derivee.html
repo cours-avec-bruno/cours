@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nombre dérivé</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Naïl</a>
+    <h1>Nombre dérivé</h1>
+    <p class="sub">De la sécante à la tangente : la pente de la courbe en un point.</p>
+
+    <div class="fn">
+      <label for="fx"><i>f</i>(<i>x</i>) =</label>
+      <input id="fx" value="x^2" spellcheck="false" autocomplete="off" aria-label="Fonction f">
+      <span class="err" id="fx-err"></span>
+    </div>
+    <p class="hint">Exemples :
+      <button class="ex">x^2</button>
+      <button class="ex">x^3 - 3x</button>
+      <button class="ex">0,5x^2 - x + 1</button>
+      <button class="ex">sqrt(x)</button>
+      <button class="ex">1/x</button>
+      <button class="ex">sin(x)</button>
+    </p>
+
+    <figure class="fig drag"><canvas id="fig" aria-label="Courbe de f, sécante (AB) et tangente en A"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--text)"></i>courbe de <em>f</em></span>
+      <span><i class="sw" style="background:var(--cos)"></i>sécante (AB)</span>
+      <span><i class="sw" style="background:repeating-linear-gradient(90deg,var(--arc) 0 5px,transparent 5px 8px)"></i>tangente en A</span>
+      <span class="muted">Déplace A et B le long de la courbe.</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row"><button class="btn primary" id="go">Rapprocher B de A</button></div>
+        <p class="note">Quand <i>h</i> devient de plus en plus petit, le taux d’accroissement se rapproche de <i>f</i>′(<i>a</i>) :</p>
+        <table class="terms htable" id="htable"></table>
+      </div>
+      <div class="readout">
+        <div class="big" id="formula"></div>
+        <div class="ro"><span class="k">A</span><span class="v" id="r-a"></span></div>
+        <div class="ro"><span class="k">B</span><span class="v" id="r-b"></span></div>
+        <div class="ro cos"><span class="k">Pente de la sécante (AB)</span><span class="v" id="r-m"></span></div>
+        <div class="ro arc"><span class="k">Nombre dérivé <i>f</i>′(<i>a</i>)</span><span class="v" id="r-d"></span></div>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée en 3 temps</h3>
+      <ul>
+        <li><b>La sécante.</b> On prend deux points de la courbe : A d’abscisse <i>a</i> et B d’abscisse <i>a</i> + <i>h</i>.
+          La droite (AB) a pour coefficient directeur Δ<i>y</i> ÷ Δ<i>x</i> = [<i>f</i>(<i>a</i> + <i>h</i>) − <i>f</i>(<i>a</i>)] ÷ <i>h</i> :
+          c’est le <b>taux d’accroissement</b>.</li>
+        <li><b>On rapproche B de A.</b> <i>h</i> devient de plus en plus petit : la sécante pivote autour de A et finit par
+          « coller » à la courbe. Elle devient la <b>tangente</b> en A.</li>
+        <li><b>Le nombre dérivé</b> <i>f</i>′(<i>a</i>) est la pente de cette tangente, c’est-à-dire la limite du taux d’accroissement quand <i>h</i> tend vers 0.</li>
+      </ul>
+
+      <h3>Exemple avec <span class="mx"><i>f</i>(<i>x</i>) = <i>x</i>²</span></h3>
+      <p>[<i>f</i>(<i>a</i> + <i>h</i>) − <i>f</i>(<i>a</i>)] ÷ <i>h</i> = [(<i>a</i> + <i>h</i>)² − <i>a</i>²] ÷ <i>h</i> = (2<i>ah</i> + <i>h</i>²) ÷ <i>h</i> = 2<i>a</i> + <i>h</i>.
+        Quand <i>h</i> tend vers 0, il reste <b>2<i>a</i></b> : donc <i>f</i>′(<i>a</i>) = 2<i>a</i>. Par exemple <i>f</i>′(1) = 2.</p>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li><i>f</i>′(<i>a</i>) = limite de [<i>f</i>(<i>a</i> + <i>h</i>) − <i>f</i>(<i>a</i>)] ÷ <i>h</i> quand <i>h</i> → 0.</li>
+        <li><i>f</i>′(<i>a</i>) est le coefficient directeur de la tangente à la courbe au point d’abscisse <i>a</i>.</li>
+        <li>Équation de la tangente : <i>y</i> = <i>f</i>′(<i>a</i>)(<i>x</i> − <i>a</i>) + <i>f</i>(<i>a</i>).</li>
+        <li><i>f</i>′(<i>a</i>) &gt; 0 : la courbe monte en A · <i>f</i>′(<i>a</i>) &lt; 0 : elle descend · <i>f</i>′(<i>a</i>) = 0 : tangente horizontale.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../assets/js/fig.js"></script>
+  <script src="derivee.js"></script>
+</body>
+</html>

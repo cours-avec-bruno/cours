@@ -7,11 +7,13 @@ index.html                  accueil : liste des élèves
 assets/style.css            style commun
 assets/js/fig.js            utilitaires de dessin (canvas)
 nail/index.html             page de Naïl (1re STI2D) : liste des séances
-nail/seance-01/             séance 1 : trigonométrie et suites
+ nail/seance-01/             séance 1 : trigonométrie et suites
   trigo.html / trigo.js     cercle trigonométrique, cos, sin et leurs courbes
   suites-arithmetiques.html suites arithmétiques
   suites-geometriques.html  suites géométriques
   suites.js                 animation commune aux deux pages de suites
+nail/seance-02/             séance 2 : dérivation
+  derivee.html / derivee.js nombre dérivé : de la sécante à la tangente
 ```
 
 ## Ajouter un élève

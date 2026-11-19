@@ -140,6 +140,24 @@ table.terms td:hover { background: var(--soft); }
 table.terms td.sel { background: var(--soft); font-weight: 600; }
 table.terms td.off { color: var(--faint); }
 
+/* Saisie d'une fonction */
+.fn { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin: 28px 0 4px; }
+.fn label { font-family: var(--math); font-size: 22px; }
+.fn input {
+  font-family: var(--math); font-size: 22px; color: var(--text); background: transparent;
+  border: 0; border-bottom: 1.5px solid var(--line); padding: 2px 4px; width: min(360px, 70vw); outline: none;
+  transition: border-color .15s;
+}
+.fn input:focus { border-bottom-color: var(--text); }
+.fn input.bad { border-bottom-color: var(--sin); }
+.err { color: var(--sin); font-size: 13px; }
+.hint { margin: 0 0 18px; font-size: 13px; color: var(--muted); }
+.ex { font: inherit; font-family: var(--math); font-size: 14px; color: var(--text); background: none; border: 0; padding: 0 6px; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.ex:hover { text-decoration-color: var(--text); }
+.ro.arc .v b { color: var(--arc); }
+.htable td { cursor: default; }
+.htable td:hover { background: none; }
+
 /* Notes « à retenir » */
 .notes { margin-top: 56px; border-top: 1px solid var(--line); }
 .notes h3 { font-size: 16px; font-weight: 600; margin: 28px 0 6px; }
