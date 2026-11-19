@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cosinus et sinus</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Naïl</a>
+    <h1>Cosinus et sinus</h1>
+    <p class="sub">D'où viennent cos et sin, et pourquoi leurs courbes ont cette forme de vague.</p>
+
+    <nav class="tabs" id="steps">
+      <button data-step="1">1. Le cercle</button>
+      <button data-step="2">2. cos et sin</button>
+      <button data-step="3">3. La courbe du sinus</button>
+      <button data-step="4">4. La courbe du cosinus</button>
+      <button data-step="0">Libre</button>
+    </nav>
+    <div class="explain" id="explain"></div>
+
+    <figure class="fig drag"><canvas id="fig" aria-label="Cercle trigonométrique et courbes de cosinus et sinus"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--cos)"></i>cos <em>θ</em> : abscisse de M</span>
+      <span><i class="sw" style="background:var(--sin)"></i>sin <em>θ</em> : ordonnée de M</span>
+      <span><i class="sw" style="background:var(--arc)"></i>arc IM, de longueur <em>θ</em></span>
+      <span class="muted">Astuce : on peut attraper M à la souris, sur le cercle ou sur la courbe.</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Lecture</button>
+          <input type="range" id="slider" min="0" max="360" step="0.5" aria-label="Angle">
+        </div>
+        <div class="row">
+          <span class="label">Unité</span>
+          <div class="seg" id="unit">
+            <button data-u="deg">degrés</button>
+            <button data-u="rad">radians</button>
+          </div>
+          <span class="label" style="min-width:auto;margin-left:12px">Vitesse</span>
+          <div class="seg" id="speed">
+            <button data-s="0.5">lente</button>
+            <button data-s="1">normale</button>
+            <button data-s="2">rapide</button>
+          </div>
+        </div>
+        <div class="row">
+          <span class="label">Angles remarquables</span>
+          <span id="chips" style="display:flex;flex-wrap:wrap;gap:6px"></span>
+        </div>
+        <div class="row toggles">
+          <label class="toggle"><input type="checkbox" data-f="proj"> Projections</label>
+          <label class="toggle"><input type="checkbox" data-f="tri"> Triangle OHM</label>
+          <label class="toggle"><input type="checkbox" data-f="arc"> Enroulement</label>
+          <label class="toggle"><input type="checkbox" data-f="sin"> Courbe sin</label>
+          <label class="toggle"><input type="checkbox" data-f="cos"> Courbe cos</label>
+          <label class="toggle"><input type="checkbox" data-f="ghost"> Courbe entière en fond</label>
+          <label class="toggle"><input type="checkbox" data-f="marks"> Repères sur le cercle</label>
+        </div>
+      </div>
+
+      <div class="readout">
+        <div class="ro"><span class="k">Angle <i>θ</i></span><span class="v" id="r-theta"></span></div>
+        <div class="ro"><span class="k">Point M</span><span class="v" id="r-M"></span></div>
+        <div class="ro cos"><span class="k">cos <i>θ</i></span><span class="v" id="r-cos"></span></div>
+        <div class="ro sin"><span class="k">sin <i>θ</i></span><span class="v" id="r-sin"></span></div>
+        <div class="ro"><span class="k">cos²<i>θ</i> + sin²<i>θ</i></span><span class="v" id="r-pyth"></span></div>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>À retenir</h3>
+      <ul>
+        <li>Sur le cercle trigonométrique (rayon 1) : M a pour coordonnées (cos <i>θ</i> ; sin <i>θ</i>).</li>
+        <li>cos <i>θ</i> et sin <i>θ</i> sont toujours compris entre −1 et 1.</li>
+        <li>Pythagore dans le triangle OHM : cos²<i>θ</i> + sin²<i>θ</i> = 1.</li>
+        <li>Un tour complet = 360° = 2π rad. Donc 180° = π rad, et pour convertir : angle en rad = angle en degrés × π ÷ 180.</li>
+        <li>Après un tour, on retrouve le même point : cos(<i>θ</i> + 2π) = cos <i>θ</i> et sin(<i>θ</i> + 2π) = sin <i>θ</i> (période 2π).</li>
+      </ul>
+
+      <h3>Valeurs remarquables</h3>
+      <table class="vals">
+        <tr><th><i>θ</i></th><td>0</td><td>π/6</td><td>π/4</td><td>π/3</td><td>π/2</td></tr>
+        <tr><th>en degrés</th><td>0°</td><td>30°</td><td>45°</td><td>60°</td><td>90°</td></tr>
+        <tr><th class="c-cos">cos <i>θ</i></th><td>1</td><td>√3/2</td><td>√2/2</td><td>1/2</td><td>0</td></tr>
+        <tr><th class="c-sin">sin <i>θ</i></th><td>0</td><td>1/2</td><td>√2/2</td><td>√3/2</td><td>1</td></tr>
+      </table>
+    </section>
+  </main>
+
+  <script src="../../assets/js/fig.js"></script>
+  <script src="trigo.js"></script>
+</body>
+</html>

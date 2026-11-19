@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suites géométriques</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-suite="geo">
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Naïl</a>
+    <h1>Suites géométriques</h1>
+    <p class="sub">On passe d’un terme au suivant en multipliant toujours par le même nombre <em>q</em>, la raison.</p>
+
+    <div class="modes" id="modes">
+      <button data-mode="rec" aria-pressed="true">
+        <span class="mk">Relation de récurrence</span>
+        <span class="mf"><i>u</i><sub><i>n</i>+1</sub> = <i>u</i><sub><i>n</i></sub> × <i>q</i></span>
+        <span class="md">comment passer d’un terme au suivant</span>
+      </button>
+      <button data-mode="exp" aria-pressed="false">
+        <span class="mk">Formule explicite</span>
+        <span class="mf"><i>u</i><sub><i>n</i></sub> = <i>u</i><sub>0</sub> × <i>q</i><sup><i>n</i></sup></span>
+        <span class="md">calculer directement n’importe quel terme</span>
+      </button>
+    </div>
+
+    <figure class="fig"><canvas id="fig" aria-label="Termes de la suite représentés par des barres"></canvas></figure>
+    <div class="legend">
+      <span><i class="box" style="background:var(--base)"></i>terme précédent</span>
+      <span><i class="box" style="background:var(--add);outline:1px solid var(--cos)"></i>hausse</span>
+      <span><i class="box" style="background:var(--sub);outline:1px dashed var(--sin)"></i>baisse</span>
+      <span><i class="sw" style="background:var(--sin)"></i>multiplication par <em>q</em></span>
+      <span id="cmp-legend" hidden><i class="box" style="border:1.5px solid var(--muted);border-radius:50%;width:9px;height:9px"></i>suite arithmétique (comparaison)</span>
+      <span class="muted">Clique sur une barre (ou ← →) pour choisir un terme.</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Construire pas à pas</button>
+          <button class="btn" id="all">Tout afficher</button>
+          <label class="toggle"><input type="checkbox" id="line"> Relier les points</label>
+          <label class="toggle"><input type="checkbox" id="compare"> Comparer avec une suite arithmétique</label>
+        </div>
+        <div class="row"><span class="label">Premier terme <em>u</em><sub>0</sub></span><input type="range" id="u0" min="0.5" max="20" step="0.5"><output id="u0v"></output></div>
+        <div class="row"><span class="label">Raison <em>q</em></span><input type="range" id="p" min="0.5" max="2.5" step="0.05"><output id="pv"></output></div>
+        <div class="row"><span class="label">Nombre de termes</span><input type="range" id="N" min="3" max="15" step="1"><output id="Nv"></output></div>
+        <div class="row" id="presets">
+          <span class="label">Exemples concrets</span>
+          <button class="chip" data-u0="1" data-p="2" data-n="10"
+            data-note="Bactéries : leur nombre double toutes les heures (×2). <i>u</i><sub><i>n</i></sub> = nombre (en milliers) après <i>n</i> heures.">Doublement</button>
+          <button class="chip" data-u0="10" data-p="1.1" data-n="15"
+            data-note="Placement à +10 % par an : augmenter de 10 %, c’est multiplier par 1 + 10/100 = 1,1. <i>u</i><sub><i>n</i></sub> = capital (en centaines d’€) après <i>n</i> années.">+10 % par an</button>
+          <button class="chip" data-u0="10" data-p="0.8" data-n="12"
+            data-note="Médicament : le corps en élimine 20 % par heure. Baisser de 20 %, c’est multiplier par 1 − 20/100 = 0,8. <i>u</i><sub><i>n</i></sub> = dose restante (mg) après <i>n</i> heures.">−20 % par heure</button>
+        </div>
+      </div>
+      <div class="readout">
+        <div class="big" id="formula"></div>
+        <p class="note" id="note"></p>
+        <p class="ctx" id="ctx"></p>
+      </div>
+    </section>
+
+    <div class="tablewrap"><table class="terms" id="terms"></table></div>
+
+    <section class="notes">
+      <h3>Pourquoi <span class="mx"><i>u</i><sub><i>n</i></sub> = <i>u</i><sub>0</sub> × <i>q</i><sup><i>n</i></sup></span> ?</h3>
+      <p>Pour aller de <i>u</i><sub>0</sub> à <i>u</i><sub><i>n</i></sub>, on fait <i>n</i> pas, et à chaque pas on multiplie par <i>q</i> :
+        <i>u</i><sub><i>n</i></sub> = <i>u</i><sub>0</sub> × <i>q</i> × <i>q</i> × … × <i>q</i> (<i>n</i> fois), et « <i>q</i> multiplié <i>n</i> fois par lui-même », c’est <i>q</i><sup><i>n</i></sup>.</p>
+
+      <h3>La grande différence avec l’arithmétique</h3>
+      <p>Dans une suite arithmétique, on ajoute <b>toujours la même quantité</b>. Ici, la hausse vaut (<i>q</i> − 1) × <i>u</i><sub><i>n</i></sub> :
+        elle est <b>proportionnelle à la valeur actuelle</b>. Regarde les blocs bleus : ils grossissent à chaque pas.
+        C’est pour ça qu’une suite géométrique finit toujours par « exploser » quand <i>q</i> &gt; 1 (coche « comparer » pour voir
+        qu’elle dépasse la suite arithmétique), et qu’elle « s’écrase » vers 0 quand 0 &lt; <i>q</i> &lt; 1.</p>
+
+      <h3>Le lien avec les pourcentages</h3>
+      <ul>
+        <li>Augmenter de <i>t</i> % revient à multiplier par 1 + <i>t</i>/100. Exemple : +5 % → <i>q</i> = 1,05.</li>
+        <li>Diminuer de <i>t</i> % revient à multiplier par 1 − <i>t</i>/100. Exemple : −20 % → <i>q</i> = 0,8.</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Avec <i>u</i><sub>0</sub> &gt; 0 : <i>q</i> &gt; 1 → croissante · 0 &lt; <i>q</i> &lt; 1 → décroissante · <i>q</i> = 1 → constante.</li>
+        <li>Pour reconnaître une suite géométrique : le quotient <i>u</i><sub><i>n</i>+1</sub> ÷ <i>u</i><sub><i>n</i></sub> est toujours le même.</li>
+        <li>Les points ne sont pas alignés : ils dessinent une courbe qui se redresse de plus en plus (croissance exponentielle).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../assets/js/fig.js"></script>
+  <script src="suites.js"></script>
+</body>
+</html>

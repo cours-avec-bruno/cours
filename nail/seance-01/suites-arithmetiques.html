@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suites arithmétiques</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-suite="arith">
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Naïl</a>
+    <h1>Suites arithmétiques</h1>
+    <p class="sub">On passe d’un terme au suivant en ajoutant toujours le même nombre <em>r</em>, la raison.</p>
+
+    <div class="modes" id="modes">
+      <button data-mode="rec" aria-pressed="true">
+        <span class="mk">Relation de récurrence</span>
+        <span class="mf"><i>u</i><sub><i>n</i>+1</sub> = <i>u</i><sub><i>n</i></sub> + <i>r</i></span>
+        <span class="md">comment passer d’un terme au suivant</span>
+      </button>
+      <button data-mode="exp" aria-pressed="false">
+        <span class="mk">Formule explicite</span>
+        <span class="mf"><i>u</i><sub><i>n</i></sub> = <i>u</i><sub>0</sub> + <i>n</i> × <i>r</i></span>
+        <span class="md">calculer directement n’importe quel terme</span>
+      </button>
+    </div>
+
+    <figure class="fig"><canvas id="fig" aria-label="Termes de la suite représentés par des barres"></canvas></figure>
+    <div class="legend">
+      <span><i class="box" style="background:var(--base)"></i>ce qui était déjà là</span>
+      <span><i class="box" style="background:var(--add);outline:1px solid var(--cos)"></i>ce qu’on ajoute (<em>r</em> &gt; 0)</span>
+      <span><i class="box" style="background:var(--sub);outline:1px dashed var(--sin)"></i>ce qu’on retire (<em>r</em> &lt; 0)</span>
+      <span class="muted">Clique sur une barre (ou ← →) pour choisir un terme.</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Construire pas à pas</button>
+          <button class="btn" id="all">Tout afficher</button>
+          <label class="toggle"><input type="checkbox" id="line"> Relier les points</label>
+        </div>
+        <div class="row"><span class="label">Premier terme <em>u</em><sub>0</sub></span><input type="range" id="u0" min="-10" max="20" step="0.5"><output id="u0v"></output></div>
+        <div class="row"><span class="label">Raison <em>r</em></span><input type="range" id="p" min="-5" max="5" step="0.5"><output id="pv"></output></div>
+        <div class="row"><span class="label">Nombre de termes</span><input type="range" id="N" min="3" max="15" step="1"><output id="Nv"></output></div>
+        <div class="row" id="presets">
+          <span class="label">Exemples concrets</span>
+          <button class="chip" data-u0="4" data-p="1.5" data-n="10"
+            data-note="Taxi : 4 € de prise en charge, puis 1,50 € par kilomètre. <i>u</i><sub><i>n</i></sub> est le prix pour <i>n</i> km.">Taxi</button>
+          <button class="chip" data-u0="18" data-p="-1.5" data-n="12"
+            data-note="Bougie de 18 cm qui raccourcit de 1,5 cm par heure. <i>u</i><sub><i>n</i></sub> est sa hauteur après <i>n</i> heures.">Bougie</button>
+          <button class="chip" data-u0="5" data-p="0" data-n="8"
+            data-note="Raison nulle : on ajoute 0 à chaque fois, la suite est constante.">r = 0</button>
+        </div>
+      </div>
+      <div class="readout">
+        <div class="big" id="formula"></div>
+        <p class="note" id="note"></p>
+        <p class="ctx" id="ctx"></p>
+      </div>
+    </section>
+
+    <div class="tablewrap"><table class="terms" id="terms"></table></div>
+
+    <section class="notes">
+      <h3>Une suite, c’est quoi ?</h3>
+      <p>Une liste de nombres numérotés : <i>u</i><sub>0</sub>, <i>u</i><sub>1</sub>, <i>u</i><sub>2</sub>… Le numéro <i>n</i> est le <b>rang</b> (en abscisse),
+        et <i>u</i><sub><i>n</i></sub> est la <b>valeur</b> du terme (la hauteur de la barre).</p>
+
+      <h3>Pourquoi <span class="mx"><i>u</i><sub><i>n</i></sub> = <i>u</i><sub>0</sub> + <i>n</i> × <i>r</i></span> ?</h3>
+      <p>Pour aller de <i>u</i><sub>0</sub> à <i>u</i><sub><i>n</i></sub>, on fait <i>n</i> pas. À chaque pas on ajoute <i>r</i>.
+        On a donc ajouté <i>n</i> fois <i>r</i>, c’est-à-dire <i>n</i> × <i>r</i>. En mode « formule explicite »,
+        on voit les <i>n</i> blocs de taille <i>r</i> empilés sur <i>u</i><sub>0</sub>.</p>
+
+      <h3>Récurrence ou formule explicite ?</h3>
+      <ul>
+        <li>La <b>récurrence</b> dit comment passer d’un terme au suivant. Pratique pour un tableur, mais pour avoir <i>u</i><sub>100</sub> il faut d’abord calculer les 99 termes d’avant.</li>
+        <li>La <b>formule explicite</b> donne directement n’importe quel terme : <i>u</i><sub>100</sub> = <i>u</i><sub>0</sub> + 100 × <i>r</i>.</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>On monte (ou descend) toujours de la même quantité <i>r</i> à chaque pas : les points sont <b>alignés</b> (coche « relier les points »).</li>
+        <li><i>r</i> &gt; 0 : suite croissante · <i>r</i> &lt; 0 : décroissante · <i>r</i> = 0 : constante.</li>
+        <li>Pour reconnaître une suite arithmétique : la différence <i>u</i><sub><i>n</i>+1</sub> − <i>u</i><sub><i>n</i></sub> est toujours la même.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../assets/js/fig.js"></script>
+  <script src="suites.js"></script>
+</body>
+</html>
