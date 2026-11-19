@@ -26,7 +26,7 @@
       <span><i class="sw" style="background:var(--cos)"></i>cos <em>θ</em> : abscisse de M</span>
       <span><i class="sw" style="background:var(--sin)"></i>sin <em>θ</em> : ordonnée de M</span>
       <span><i class="sw" style="background:var(--arc)"></i>arc IM, de longueur <em>θ</em></span>
-      <span class="muted">Astuce : on peut attraper M à la souris, sur le cercle ou sur la courbe.</span>
+      <span class="muted">On peut attraper M à la souris.</span>
     </div>
 
     <section class="panel">
@@ -35,40 +35,12 @@
           <button class="btn primary" id="play">▶ Lecture</button>
           <input type="range" id="slider" min="0" max="360" step="0.5" aria-label="Angle">
         </div>
-        <div class="row">
-          <span class="label">Unité</span>
-          <div class="seg" id="unit">
-            <button data-u="deg">degrés</button>
-            <button data-u="rad">radians</button>
-          </div>
-          <span class="label" style="min-width:auto;margin-left:12px">Vitesse</span>
-          <div class="seg" id="speed">
-            <button data-s="0.5">lente</button>
-            <button data-s="1">normale</button>
-            <button data-s="2">rapide</button>
-          </div>
-        </div>
-        <div class="row">
-          <span class="label">Angles remarquables</span>
-          <span id="chips" style="display:flex;flex-wrap:wrap;gap:6px"></span>
-        </div>
-        <div class="row toggles">
-          <label class="toggle"><input type="checkbox" data-f="proj"> Projections</label>
-          <label class="toggle"><input type="checkbox" data-f="tri"> Triangle OHM</label>
-          <label class="toggle"><input type="checkbox" data-f="arc"> Enroulement</label>
-          <label class="toggle"><input type="checkbox" data-f="sin"> Courbe sin</label>
-          <label class="toggle"><input type="checkbox" data-f="cos"> Courbe cos</label>
-          <label class="toggle"><input type="checkbox" data-f="ghost"> Courbe entière en fond</label>
-          <label class="toggle"><input type="checkbox" data-f="marks"> Repères sur le cercle</label>
-        </div>
       </div>
 
       <div class="readout">
         <div class="ro"><span class="k">Angle <i>θ</i></span><span class="v" id="r-theta"></span></div>
-        <div class="ro"><span class="k">Point M</span><span class="v" id="r-M"></span></div>
         <div class="ro cos"><span class="k">cos <i>θ</i></span><span class="v" id="r-cos"></span></div>
         <div class="ro sin"><span class="k">sin <i>θ</i></span><span class="v" id="r-sin"></span></div>
-        <div class="ro"><span class="k">cos²<i>θ</i> + sin²<i>θ</i></span><span class="v" id="r-pyth"></span></div>
       </div>
     </section>
 

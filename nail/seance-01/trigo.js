@@ -5,7 +5,7 @@
   const canvas = $('fig');
 
   const S = {
-    t: PI / 3, playing: false, speed: 1, unit: 'deg', step: 1,
+    t: PI / 3, playing: false, speed: 1, step: 1,
     f: { proj: false, tri: false, arc: true, sin: false, cos: false, ghost: false, marks: false },
   };
 
@@ -42,13 +42,13 @@
         exactement la même vague que le sinus, mais <b>décalée de π/2</b> : le cosinus a un quart de tour d'avance.`,
     },
     0: {
+      f: { proj: true, tri: false, arc: false, sin: true, cos: true, ghost: true, marks: false },
       html: `<b>Mode libre.</b> Attrape M à la souris (sur le cercle, ou directement sur la courbe), utilise le curseur,
-        ou clique sur un angle remarquable pour voir les valeurs exactes. Les cases à cocher permettent de choisir ce qui est affiché.`,
+        M s'aimante sur les angles remarquables (π/6, π/4, π/3…) : les valeurs exactes s'affichent alors.`,
     },
   };
 
   const REM = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360];
-  const CHIPS = [0, 30, 45, 60, 90, 120, 135, 150, 180, 270, 360];
   const RADL = ['0', 'π/2', 'π', '3π/2', '2π', '5π/2', '3π', '7π/2', '4π'];
 
   const gcd = (a, b) => (b ? gcd(b, a % b) : Math.abs(a));
@@ -119,8 +119,9 @@
       ctx.lineWidth = 1;
       ctx.strokeStyle = C.line; Fig.seg(ctx, x, gy(1), x, gy(-1));
       ctx.strokeStyle = C.axis; Fig.seg(ctx, x, cy - 4, x, cy + 4);
-      const lab = S.unit === 'deg' ? k * 90 + '°' : RADL[k] || k + 'π/2';
-      Fig.label(ctx, lab, x, gy(-1) + 20, { size: 12, color: (k * PI) / 2 > TAU + 1e-9 ? C.faint : C.muted, halo: false });
+      const far = (k * PI) / 2 > TAU + 1e-9;
+      Fig.label(ctx, RADL[k] || k + 'π/2', x, gy(-1) + 19, { size: 12, color: far ? C.faint : C.muted, halo: false });
+      Fig.label(ctx, k * 90 + '°', x, gy(-1) + 34, { size: 11, color: C.faint, halo: false });
     }
 
     // Axes
@@ -146,7 +147,7 @@
         ctx.strokeStyle = C.muted; ctx.lineWidth = 1;
         Fig.seg(ctx, cx + (R - 4) * ca, cy - (R - 4) * sa, cx + (R + 4) * ca, cy - (R + 4) * sa);
         if (d === 0) continue;
-        const lab = S.unit === 'deg' ? d + '°' : piFrac(a);
+        const lab = piFrac(a);
         const rr = R + 15;
         Fig.label(ctx, lab, cx + rr * ca, cy - rr * sa, {
           size: 11, color: C.muted, align: ca > 0.3 ? 'left' : ca < -0.3 ? 'right' : 'center',
@@ -250,7 +251,7 @@
       const y = gy(1) - 16;
       ctx.strokeStyle = C.muted; ctx.lineWidth = 1.2;
       Fig.arrow(ctx, gx(PI / 2), y, gx(0) + 2, y, 6);
-      Fig.label(ctx, S.unit === 'deg' ? 'décalage de 90°' : 'décalage de π/2', gx(PI / 4), y - 12, { size: 12, color: C.muted });
+      Fig.label(ctx, 'décalage de π/2', gx(PI / 4), y - 12, { size: 12, color: C.muted });
     }
 
     if (f.cos) Fig.dot(ctx, X1, gy(c), 4.5, C.cos);
@@ -265,16 +266,11 @@
     const degS = Fig.num(deg(t), 1) + '°';
     const radS = (pf || Fig.fixed(t, 3)) + ' rad';
     const eq = pf ? '=' : '≈';
-    $('r-theta').innerHTML = S.unit === 'deg'
-      ? `<b>${degS}</b> <span class="muted">${eq} ${radS}</span>`
-      : `<b>${radS}</b> <span class="muted">${eq} ${degS}</span>`;
-    $('r-M').textContent = `( ${Fig.fixed(c, 3)} ; ${Fig.fixed(s, 3)} )`;
+    $('r-theta').innerHTML = `<b>${radS}</b> <span class="muted">${eq} ${degS}</span>`;
     $('r-cos').innerHTML = `<b>${Fig.fixed(c, 3)}</b>` + (ex ? ` <span class="muted">= ${exact(c)}</span>` : '');
     $('r-sin').innerHTML = `<b>${Fig.fixed(s, 3)}</b>` + (ex ? ` <span class="muted">= ${exact(s)}</span>` : '');
-    $('r-pyth').innerHTML = `${Fig.fixed(c * c, 3)} + ${Fig.fixed(s * s, 3)} = <b>1</b>`;
     const sl = $('slider');
     if (document.activeElement !== sl) sl.value = deg(t);
-    document.querySelectorAll('#chips .chip').forEach(b => b.setAttribute('aria-pressed', Math.abs(+b.dataset.d - deg(t)) < 1e-6));
     $('play').textContent = S.playing ? '❚❚ Pause' : '▶ Lecture';
   }
 
@@ -334,20 +330,8 @@
   ['pointerup', 'pointercancel'].forEach(ev => canvas.addEventListener(ev, () => { drag = null; canvas.style.cursor = 'grab'; }));
 
   /* ---------- Interface ---------- */
-  function buildChips() {
-    $('chips').innerHTML = CHIPS.map(d => {
-      const lab = S.unit === 'deg' ? d + '°' : piFrac((d * PI) / 180);
-      return `<button class="chip" data-d="${d}">${lab}</button>`;
-    }).join('');
-    document.querySelectorAll('#chips .chip').forEach(b => (b.onclick = () => {
-      S.playing = false; S.t = (+b.dataset.d * PI) / 180; draw();
-    }));
-  }
   function syncUI() {
     document.querySelectorAll('#steps button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.step === S.step));
-    document.querySelectorAll('#unit button').forEach(b => b.setAttribute('aria-pressed', b.dataset.u === S.unit));
-    document.querySelectorAll('#speed button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.s === S.speed));
-    document.querySelectorAll('[data-f]').forEach(i => (i.checked = S.f[i.dataset.f]));
   }
   function setStep(n) {
     const st = STEPS[n];
@@ -363,10 +347,6 @@
   $('slider').addEventListener('input', e => { S.playing = false; S.t = (+e.target.value * PI) / 180; draw(); });
   $('play').onclick = () => setPlaying(!S.playing);
   document.querySelectorAll('#steps button').forEach(b => (b.onclick = () => setStep(+b.dataset.step)));
-  document.querySelectorAll('#unit button').forEach(b => (b.onclick = () => { S.unit = b.dataset.u; buildChips(); syncUI(); draw(); }));
-  document.querySelectorAll('#speed button').forEach(b => (b.onclick = () => { S.speed = +b.dataset.s; syncUI(); }));
-  document.querySelectorAll('[data-f]').forEach(i => (i.onchange = () => { S.f[i.dataset.f] = i.checked; draw(); }));
 
-  buildChips();
   setStep(1);
 })();

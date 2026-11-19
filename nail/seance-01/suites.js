@@ -7,11 +7,10 @@
 
   const S = {
     u0: A ? 2 : 1, p: 1.5, N: 10,
-    mode: 'rec', shown: 11, sel: 5, grow: 1, wait: 0, playing: false, line: false, compare: false,
+    mode: 'rec', shown: 11, sel: 5, grow: 1, wait: 0, playing: false,
   };
 
   const val = n => (A ? S.u0 + n * S.p : S.u0 * Math.pow(S.p, n));
-  const cmp = n => S.u0 + n * S.u0 * (S.p - 1); // arithmétique de même départ et même 1re hausse
   const num = x => Fig.num(x, 2);
   const par = x => (x < 0 ? `(${num(x)})` : num(x));
   const u = n => `<i>u</i><sub>${n}</sub>`;
@@ -24,7 +23,7 @@
   function geom() {
     const W = view.W, H = view.H, L = 64, R = 20, T = 40, B = 42;
     const vals = [0];
-    for (let k = 0; k <= S.N; k++) { vals.push(val(k)); if (!A && S.compare) vals.push(cmp(k)); }
+    for (let k = 0; k <= S.N; k++) vals.push(val(k));
     let lo = Math.min(...vals), hi = Math.max(...vals);
     if (hi - lo < 1e-9) { hi += 1; lo -= 1; }
     const span = hi - lo;
@@ -138,35 +137,6 @@
     const last = S.shown - 1;
     for (let k = 0; k < S.shown; k++) bar(k, k === last ? Fig.ease(S.grow) : 1);
 
-    // Courbe / droite reliant les points
-    if (S.line) {
-      ctx.save();
-      ctx.beginPath(); ctx.rect(L, T - 20, W - L - R, G.ph + 20); ctx.clip();
-      ctx.setLineDash([6, 5]); ctx.strokeStyle = C.muted; ctx.lineWidth = 1.3;
-      ctx.beginPath();
-      const a = A ? -0.5 : 0, b = A ? S.N + 0.5 : S.N;
-      for (let i = 0; i <= 240; i++) {
-        const n = a + ((b - a) * i) / 240, y = Y(val(n));
-        i ? ctx.lineTo(X(n), y) : ctx.moveTo(X(n), y);
-      }
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // Comparaison avec une suite arithmétique
-    if (!A && S.compare) {
-      ctx.save();
-      ctx.setLineDash([3, 4]); ctx.strokeStyle = C.faint; ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      for (let k = 0; k <= last; k++) k ? ctx.lineTo(X(k), Y(cmp(k))) : ctx.moveTo(X(k), Y(cmp(k)));
-      ctx.stroke();
-      ctx.restore();
-      for (let k = 0; k <= last; k++) {
-        ctx.beginPath(); ctx.arc(X(k), Y(cmp(k)), 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#fff'; ctx.fill(); ctx.strokeStyle = C.muted; ctx.lineWidth = 1.5; ctx.stroke();
-      }
-    }
-
     // Flèches ×q (géométrique)
     if (!A) {
       const to = S.mode === 'rec' ? last : Math.min(S.sel, last);
@@ -213,10 +183,6 @@
       const qs = n <= 6 ? Array(n).fill('<i>q</i>').join(' × ') : '<i>q</i> × <i>q</i> × … × <i>q</i>';
       f = `${u(n)} = ${u(0)} × <i>q</i><sup>${n}</sup> = ${num(S.u0)} × ${num(S.p)}<sup>${n}</sup> = <b>${num(v)}</b>`;
       note = `De ${u(0)} à ${u(n)}, on fait ${n} pas et on multiplie ${n} fois par <i>q</i> : ${u(0)} × ${qs} = ${u(0)} × <i>q</i><sup>${n}</sup>.`;
-    }
-    if (!A && S.compare) {
-      note += `<br><span class="muted">○ Comparaison : la suite arithmétique qui part aussi de ${num(S.u0)} et ajoute toujours
-        ${u(1)} − ${u(0)} = ${num(val(1) - S.u0)}. Ici, elle vaudrait ${num(cmp(n))}.</span>`;
     }
     $('formula').innerHTML = f;
     $('note').innerHTML = note;
@@ -270,40 +236,23 @@
   }
 
   /* ---------- Interface ---------- */
-  function setParams(o, fromPreset) {
+  function setParams(o) {
     stop();
     Object.assign(S, o);
     S.shown = S.N + 1;
-    S.sel = Math.min(S.sel, S.N);
-    $('u0').value = S.u0; $('p').value = S.p; $('N').value = S.N;
-    $('u0v').textContent = num(S.u0); $('pv').textContent = num(S.p); $('Nv').textContent = S.N + 1;
-    if (!fromPreset) {
-      $('ctx').innerHTML = '';
-      document.querySelectorAll('#presets .chip').forEach(b => b.setAttribute('aria-pressed', 'false'));
-    }
+    $('u0').value = S.u0; $('p').value = S.p;
+    $('u0v').textContent = num(S.u0); $('pv').textContent = num(S.p);
     buildTable();
     draw();
   }
 
-  ['u0', 'p', 'N'].forEach(id => $(id).addEventListener('input', e => setParams({ [id]: +e.target.value })));
-  document.querySelectorAll('#presets .chip').forEach(b => (b.onclick = () => {
-    setParams({ u0: +b.dataset.u0, p: +b.dataset.p, N: +b.dataset.n, sel: Math.min(S.sel, +b.dataset.n) }, true);
-    document.querySelectorAll('#presets .chip').forEach(o => o.setAttribute('aria-pressed', o === b));
-    $('ctx').innerHTML = b.dataset.note;
-  }));
+  ['u0', 'p'].forEach(id => $(id).addEventListener('input', e => setParams({ [id]: +e.target.value })));
   document.querySelectorAll('#modes button').forEach(b => (b.onclick = () => {
     S.mode = b.dataset.mode;
     document.querySelectorAll('#modes button').forEach(o => o.setAttribute('aria-pressed', o === b));
     draw();
   }));
   $('play').onclick = play;
-  $('all').onclick = () => { stop(); S.shown = S.N + 1; draw(); };
-  $('line').onchange = e => { S.line = e.target.checked; draw(); };
-  if ($('compare')) $('compare').onchange = e => {
-    S.compare = e.target.checked;
-    $('cmp-legend').hidden = !S.compare;
-    draw();
-  };
 
   canvas.addEventListener('pointerdown', e => {
     const r = canvas.getBoundingClientRect(), k = Math.floor((e.clientX - r.left - G.L) / G.slot);

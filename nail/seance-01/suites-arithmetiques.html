@@ -37,26 +37,13 @@
       <div class="controls">
         <div class="row">
           <button class="btn primary" id="play">▶ Construire pas à pas</button>
-          <button class="btn" id="all">Tout afficher</button>
-          <label class="toggle"><input type="checkbox" id="line"> Relier les points</label>
         </div>
         <div class="row"><span class="label">Premier terme <em>u</em><sub>0</sub></span><input type="range" id="u0" min="-10" max="20" step="0.5"><output id="u0v"></output></div>
         <div class="row"><span class="label">Raison <em>r</em></span><input type="range" id="p" min="-5" max="5" step="0.5"><output id="pv"></output></div>
-        <div class="row"><span class="label">Nombre de termes</span><input type="range" id="N" min="3" max="15" step="1"><output id="Nv"></output></div>
-        <div class="row" id="presets">
-          <span class="label">Exemples concrets</span>
-          <button class="chip" data-u0="4" data-p="1.5" data-n="10"
-            data-note="Taxi : 4 € de prise en charge, puis 1,50 € par kilomètre. <i>u</i><sub><i>n</i></sub> est le prix pour <i>n</i> km.">Taxi</button>
-          <button class="chip" data-u0="18" data-p="-1.5" data-n="12"
-            data-note="Bougie de 18 cm qui raccourcit de 1,5 cm par heure. <i>u</i><sub><i>n</i></sub> est sa hauteur après <i>n</i> heures.">Bougie</button>
-          <button class="chip" data-u0="5" data-p="0" data-n="8"
-            data-note="Raison nulle : on ajoute 0 à chaque fois, la suite est constante.">r = 0</button>
-        </div>
       </div>
       <div class="readout">
         <div class="big" id="formula"></div>
         <p class="note" id="note"></p>
-        <p class="ctx" id="ctx"></p>
       </div>
     </section>
 
@@ -80,7 +67,7 @@
 
       <h3>À retenir</h3>
       <ul>
-        <li>On monte (ou descend) toujours de la même quantité <i>r</i> à chaque pas : les points sont <b>alignés</b> (coche « relier les points »).</li>
+        <li>On monte (ou descend) toujours de la même quantité <i>r</i> à chaque pas : les points sont <b>alignés</b>.</li>
         <li><i>r</i> &gt; 0 : suite croissante · <i>r</i> &lt; 0 : décroissante · <i>r</i> = 0 : constante.</li>
         <li>Pour reconnaître une suite arithmétique : la différence <i>u</i><sub><i>n</i>+1</sub> − <i>u</i><sub><i>n</i></sub> est toujours la même.</li>
       </ul>
