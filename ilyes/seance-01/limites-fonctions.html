@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Limites de fonctions</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Ilyes</a>
+    <h1>Limites de fonctions</h1>
+    <p class="sub">On fait bouger <em>x</em> et on regarde ce que devient <em>f</em>(<em>x</em>).</p>
+
+    <div class="row" style="margin:28px 0 8px"><span class="label">Fonction</span><span id="funcs" style="display:flex;flex-wrap:wrap;gap:6px"></span></div>
+    <div class="row"><span class="label">Quand…</span><span id="dirs" style="display:flex;flex-wrap:wrap;gap:6px"></span></div>
+
+    <figure class="fig" style="margin-top:14px"><canvas id="fig" aria-label="Courbe de f et point mobile"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--text)"></i>courbe de <em>f</em></span>
+      <span><i class="box" style="background:var(--cos);border-radius:50%"></i>point mobile</span>
+      <span><i class="sw" style="background:repeating-linear-gradient(90deg,var(--arc) 0 5px,transparent 5px 8px)"></i>asymptote</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Faire avancer x</button>
+          <input type="range" id="s" min="0" max="1000" step="1" aria-label="Position de x">
+        </div>
+        <table class="terms htable" id="table"></table>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k"><i>x</i></span><span class="v" id="r-x"></span></div>
+        <div class="ro"><span class="k"><i>f</i>(<i>x</i>)</span><span class="v" id="r-f"></span></div>
+        <div class="big" id="lim" style="margin-top:14px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>À retenir</h3>
+      <ul>
+        <li>lim<sub><i>x</i>→+∞</sub> <i>f</i>(<i>x</i>) = ℓ : <i>f</i>(<i>x</i>) est aussi proche de ℓ qu’on veut dès que <i>x</i> est assez grand.
+          La droite <i>y</i> = ℓ est <b>asymptote horizontale</b>.</li>
+        <li>lim<sub><i>x</i>→<i>a</i></sub> <i>f</i>(<i>x</i>) = ±∞ : <i>f</i>(<i>x</i>) devient énorme quand <i>x</i> s’approche de <i>a</i>.
+          La droite <i>x</i> = <i>a</i> est <b>asymptote verticale</b>.</li>
+        <li>Près d’une valeur interdite, on regarde souvent séparément <i>x</i> → <i>a</i><sup>+</sup> (par la droite) et <i>x</i> → <i>a</i><sup>−</sup> (par la gauche) : les résultats peuvent être différents.</li>
+        <li>À connaître : lim 1/<i>x</i> = 0 en ±∞ · lim<sub><i>x</i>→0⁺</sub> 1/<i>x</i> = +∞ · lim<sub><i>x</i>→0⁻</sub> 1/<i>x</i> = −∞ · lim <i>x</i>² = +∞ en ±∞.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../assets/js/fig.js"></script>
+  <script src="limites-fonctions.js"></script>
+</body>
+</html>

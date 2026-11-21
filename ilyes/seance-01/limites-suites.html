@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Limites de suites</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Ilyes</a>
+    <h1>Limites de suites</h1>
+    <p class="sub">Une suite tend vers ℓ si, à partir d’un certain rang, <b>tous</b> ses termes restent aussi près de ℓ qu’on veut.</p>
+
+    <div class="row" id="cases" style="margin:28px 0 10px"></div>
+    <p class="explain" id="explain" style="min-height:3.4em"></p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Termes de la suite et bande autour de la limite"></canvas></figure>
+    <div class="legend" id="legend"></div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row" id="row-l" hidden><span class="label">Limite proposée ℓ</span><input type="range" id="l" min="-1.5" max="1.5" step="0.1"><output id="lv"></output></div>
+        <div class="row"><span class="label" id="plabel"></span><input type="range" id="p" min="0" max="1000" step="1"><output id="pv"></output></div>
+      </div>
+      <div class="readout">
+        <div class="big" id="res" style="font-size:18px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>La définition, avec des mots</h3>
+      <ul>
+        <li><b>lim <i>u</i><sub><i>n</i></sub> = ℓ</b> : quelle que soit la largeur de la bande autour de ℓ (aussi fine qu’on veut),
+          il existe un rang <i>N</i> à partir duquel <b>tous</b> les termes sont dans la bande.</li>
+        <li><b>lim <i>u</i><sub><i>n</i></sub> = +∞</b> : quel que soit le seuil <i>A</i> (aussi grand qu’on veut),
+          il existe un rang <i>N</i> à partir duquel <b>tous</b> les termes dépassent <i>A</i>.</li>
+        <li>Plus on resserre la bande (ou plus on monte le seuil), plus <i>N</i> est grand, mais on en trouve toujours un.</li>
+        <li>Une suite peut n’avoir <b>aucune</b> limite : (−1)<sup><i>n</i></sup> saute sans arrêt entre −1 et 1.</li>
+      </ul>
+      <h3>À retenir</h3>
+      <ul>
+        <li>lim 1/<i>n</i> = 0 · lim √<i>n</i> = +∞ · lim <i>n</i>² = +∞.</li>
+        <li>Si −1 &lt; <i>q</i> &lt; 1, lim <i>q</i><sup><i>n</i></sup> = 0 · si <i>q</i> &gt; 1, lim <i>q</i><sup><i>n</i></sup> = +∞.</li>
+        <li>Une suite peut tendre vers ℓ en oscillant autour (exemple 2 + (−1)<sup><i>n</i></sup>/<i>n</i>) : ce qui compte, c’est qu’elle finisse par rester près de ℓ.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../assets/js/fig.js"></script>
+  <script src="limites-suites.js"></script>
+</body>
+</html>

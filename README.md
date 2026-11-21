@@ -14,6 +14,11 @@ nail/seance-01/             séance 1 : trigonométrie et suites
   suites.js                 animation commune aux deux pages de suites
 nail/seance-02/             séance 2 : dérivation
   derivee.html / derivee.js nombre dérivé : de la sécante à la tangente
+ilyes/index.html            page d'Ilyes : liste des séances
+ilyes/seance-01/            séance 1 : récurrence et limites
+  recurrence.html / .js     dominos (initialisation, hérédité) et somme des impairs
+  limites-suites.html / .js bande autour de la limite, rang N, seuil A
+  limites-fonctions.html/.js x → ±∞ ou x → a, asymptotes
 ```
 
 ## Ajouter un élève
