@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loi binomiale</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .bn { display: inline-flex; align-items: center; vertical-align: middle; font-family: var(--math); }
+    .bn::before, .bn::after { font-size: 2em; line-height: 1; font-weight: 300; transform: scaleX(.75); }
+    .bn::before { content: "("; }
+    .bn::after { content: ")"; }
+    .bn > span { display: inline-flex; flex-direction: column; align-items: center; font-size: .78em; line-height: 1.05; }
+    .path { font-family: var(--math); letter-spacing: .08em; }
+    .path .s { color: var(--arc); font-weight: 600; }
+    .path .e { color: var(--sin); }
+  </style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Loi binomiale</h1>
+    <p class="sub">La planche de Galton : chaque clou est une épreuve de Bernoulli, et la case d’arrivée compte les succès.</p>
+
+    <p class="explain" style="margin-top:24px">
+      À chaque clou, la bille part <b class="c-arc">à droite</b> avec la probabilité <em>p</em> (succès)
+      ou <b class="c-sin">à gauche</b> avec la probabilité 1 − <em>p</em> (échec), indépendamment des autres clous.
+      Après <em>n</em> rangées, la case où elle tombe est le nombre <em>X</em> de succès : <em>X</em> suit la loi binomiale ℬ(<em>n</em> ; <em>p</em>).
+    </p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Planche de Galton et histogramme des cases"></canvas></figure>
+    <div class="legend">
+      <span><i class="box" style="background:var(--add);outline:1px solid var(--cos)"></i>fréquence observée</span>
+      <span><i class="box" style="border:1.5px solid var(--text)"></i>probabilité théorique <b style="font-weight:400"><em>P</em>(<em>X</em> = <em>k</em>)</b></span>
+      <span><i class="sw" style="background:var(--arc)"></i>succès (droite)</span>
+      <span><i class="sw" style="background:var(--sin)"></i>échec (gauche)</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row"><button class="btn primary" id="play">▶ Lâcher 100 billes</button></div>
+        <div class="row"><span class="label">Nombre d’épreuves <em>n</em></span><input type="range" id="n" min="2" max="12" step="1"><output id="nv"></output></div>
+        <div class="row"><span class="label">Probabilité de succès <em>p</em></span><input type="range" id="p" min="0.05" max="0.95" step="0.05"><output id="pv"></output></div>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k">Billes tombées</span><span class="v" id="r-nb"></span></div>
+        <div class="ro"><span class="k">Espérance <i>E</i>(<i>X</i>) = <i>np</i></span><span class="v" id="r-e"></span></div>
+        <div class="ro"><span class="k">Écart type σ(<i>X</i>) = √(<i>np</i>(1 − <i>p</i>))</span><span class="v" id="r-s"></span></div>
+        <div class="ro"><span class="k">Moyenne observée</span><span class="v" id="r-m"></span></div>
+        <p class="note" id="msg" style="margin-top:14px"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <p>Pour arriver dans la case <i>k</i>, il faut exactement <i>k</i> succès parmi les <i>n</i> épreuves.
+        Chaque chemin de ce type a la probabilité <i>p</i><sup><i>k</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>k</i></sup>,
+        et il y en a <span class="bn"><span><i>n</i><i>k</i></span></span> (on choisit les rangs des <i>k</i> succès).</p>
+      <h3>À retenir</h3>
+      <ul>
+        <li><i>P</i>(<i>X</i> = <i>k</i>) = <span class="bn"><span><i>n</i><i>k</i></span></span> <i>p</i><sup><i>k</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>k</i></sup> pour <i>k</i> = 0, 1, …, <i>n</i>.</li>
+        <li><i>E</i>(<i>X</i>) = <i>np</i> · <i>V</i>(<i>X</i>) = <i>np</i>(1 − <i>p</i>) · σ(<i>X</i>) = √(<i>np</i>(1 − <i>p</i>)).</li>
+        <li>Conditions : <i>n</i> épreuves <b>identiques</b> et <b>indépendantes</b>, chacune à deux issues.</li>
+        <li>Plus on lâche de billes, plus l’histogramme observé colle aux probabilités théoriques.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="binomiale.js"></script>
+</body>
+</html>

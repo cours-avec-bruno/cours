@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dénombrement</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .slots { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; font-family: var(--math); font-size: 20px; margin: 2px 0 14px; }
+    .slot { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; }
+    .slot small { font-family: var(--font); font-size: 11px; color: var(--muted); }
+    .slot b { display: inline-block; min-width: 40px; padding: 3px 9px; border: 1.5px solid var(--text); border-radius: 8px; text-align: center; font-weight: 500; }
+    .slot b.g { border-color: var(--arc); color: var(--arc); }
+    .slots .op { padding-bottom: 6px; color: var(--muted); }
+    .slots .tot { padding-bottom: 5px; font-weight: 600; }
+    .bn { display: inline-flex; align-items: center; vertical-align: middle; font-family: var(--math); }
+    .bn::before, .bn::after { font-size: 2em; line-height: 1; font-weight: 300; transform: scaleX(.75); }
+    .bn::before { content: "("; }
+    .bn::after { content: ")"; }
+    .bn > span { display: inline-flex; flex-direction: column; align-items: center; font-size: .78em; line-height: 1.05; }
+  </style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Dénombrement</h1>
+    <p class="sub">On tire <em>k</em> lettres parmi A, B, C, D, E, et on dessine <b>tous</b> les tirages possibles : selon les règles, on n’en compte pas le même nombre.</p>
+
+    <div class="row" id="modes" style="margin:28px 0 10px">
+      <button class="chip" data-m="rep">ordre, avec remise</button>
+      <button class="chip" data-m="arr">ordre, sans remise</button>
+      <button class="chip" data-m="comb">sans ordre</button>
+    </div>
+    <p class="explain" id="explain" style="min-height:3.4em"></p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Tous les tirages possibles, une tuile par tirage"></canvas></figure>
+    <div class="legend">
+      <span><i class="box" style="border:1.2px solid var(--axis);background:#fff"></i>un tirage ordonné</span>
+      <span><i class="box" style="border:1.2px solid var(--axis);background:var(--soft)"></i>tirage avec une lettre répétée</span>
+      <span><i class="box" style="border:1.5px solid var(--arc);background:rgba(43,147,72,.1)"></i>une main (sans ordre)</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row"><span class="label">Nombre de lettres tirées <em>k</em></span><input type="range" id="k" min="1" max="3" step="1"><output id="kv"></output></div>
+        <div class="row"><button class="btn primary" id="play">▶ Rejouer l’animation</button></div>
+      </div>
+      <div class="readout">
+        <div class="slots" id="slots"></div>
+        <div class="big" id="res"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <p>On remplit <i>k</i> cases l’une après l’autre et on <b>multiplie</b> le nombre de choix de chaque case.
+        Quand l’ordre ne compte pas, chaque main a été comptée autant de fois qu’on peut ranger ses <i>k</i> lettres, c’est-à-dire <i>k</i>! fois : on <b>divise</b> par <i>k</i>!.</p>
+      <h3>À retenir</h3>
+      <ul>
+        <li><i>k</i>-uplets (ordre, répétitions permises) : <i>n</i><sup><i>k</i></sup>.</li>
+        <li>Arrangements (ordre, sans répétition) : <i>n</i> × (<i>n</i> − 1) × … × (<i>n</i> − <i>k</i> + 1) = <i>n</i>! / (<i>n</i> − <i>k</i>)!. Permutations (<i>k</i> = <i>n</i>) : <i>n</i>!.</li>
+        <li>Combinaisons (sans ordre) : <span class="bn"><span><i>n</i><i>k</i></span></span> = <i>n</i>! / (<i>k</i>! (<i>n</i> − <i>k</i>)!) = arrangements ÷ <i>k</i>!.</li>
+        <li><span class="bn"><span><i>n</i><i>k</i></span></span> = <span class="bn"><span><i>n</i><span><i>n</i> − <i>k</i></span></span></span> : choisir les <i>k</i> qu’on prend, c’est choisir les <i>n</i> − <i>k</i> qu’on laisse.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="denombrement.js"></script>
+</body>
+</html>

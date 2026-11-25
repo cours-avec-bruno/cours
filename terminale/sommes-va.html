@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sommes de variables aléatoires</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>h2 em { text-transform: none; }</style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Sommes de variables aléatoires</h1>
+    <p class="sub">On additionne des dés : les espérances s’ajoutent, les variances aussi (si les lancers sont indépendants).</p>
+
+    <h2>Deux dés : la loi de <em>X</em> + <em>Y</em></h2>
+    <p class="explain" style="margin-top:12px;min-height:0">
+      <em>X</em> et <em>Y</em> sont les résultats de deux dés. Les 36 cases du tableau sont équiprobables (1/36 chacune).
+      Les cases d’une même <b>diagonale</b> donnent la même somme : survole une diagonale ou une barre.
+    </p>
+    <figure class="fig"><canvas id="two" aria-label="Tableau des sommes de deux dés et histogramme de X + Y"></canvas></figure>
+    <section class="panel">
+      <div class="controls">
+        <div class="big" id="two-res"></div>
+      </div>
+      <div class="readout">
+        <p class="note" id="two-msg"></p>
+      </div>
+    </section>
+
+    <h2><em>n</em> dés : la loi de <em>S</em><sub><em>n</em></sub> = <em>X</em><sub>1</sub> + … + <em>X</em><sub><em>n</em></sub></h2>
+    <p class="explain" style="margin-top:12px;min-height:0">
+      Ajoute des dés un par un. L’axe horizontal ne bouge pas : regarde la cloche <b>avancer</b> (l’espérance)
+      et <b>s’élargir</b> (l’écart type), mais pas au même rythme.
+    </p>
+    <figure class="fig"><canvas id="many" aria-label="Loi de la somme de n dés"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--sin)"></i>espérance <b style="font-weight:400"><em>E</em>(<em>S</em><sub><em>n</em></sub>)</b></span>
+      <span><i class="box" style="background:rgba(43,147,72,.15)"></i>intervalle <b style="font-weight:400">[<em>E</em> − σ ; <em>E</em> + σ]</b></span>
+    </div>
+    <section class="panel">
+      <div class="controls">
+        <div class="row"><button class="btn primary" id="play">▶ Ajouter les dés un par un</button></div>
+        <div class="row"><span class="label">Nombre de dés <em>n</em></span><input type="range" id="n" min="1" max="12" step="1"><output id="nv"></output></div>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k"><i>E</i>(<i>S</i><sub><i>n</i></sub>) = <i>n</i> × 3,5</span><span class="v" id="r-e"></span></div>
+        <div class="ro"><span class="k"><i>V</i>(<i>S</i><sub><i>n</i></sub>) = <i>n</i> × 35/12</span><span class="v" id="r-v"></span></div>
+        <div class="ro"><span class="k">σ(<i>S</i><sub><i>n</i></sub>) = √<i>V</i></span><span class="v" id="r-s"></span></div>
+        <p class="note" id="msg" style="margin-top:14px"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <p>L’espérance d’une somme est toujours la somme des espérances. Pour la variance, c’est vrai quand les variables sont
+        <b>indépendantes</b> : avec <i>n</i> dés, la variance est multipliée par <i>n</i>, donc l’écart type seulement par √<i>n</i>.</p>
+      <h3>À retenir</h3>
+      <ul>
+        <li><i>E</i>(<i>X</i> + <i>Y</i>) = <i>E</i>(<i>X</i>) + <i>E</i>(<i>Y</i>) et <i>E</i>(<i>aX</i>) = <i>a</i> <i>E</i>(<i>X</i>).</li>
+        <li>Si <i>X</i> et <i>Y</i> sont indépendantes : <i>V</i>(<i>X</i> + <i>Y</i>) = <i>V</i>(<i>X</i>) + <i>V</i>(<i>Y</i>). Et <i>V</i>(<i>aX</i>) = <i>a</i>² <i>V</i>(<i>X</i>).</li>
+        <li>Pour un échantillon de taille <i>n</i> : <i>E</i>(<i>S</i><sub><i>n</i></sub>) = <i>n</i> <i>E</i>(<i>X</i>), <i>V</i>(<i>S</i><sub><i>n</i></sub>) = <i>n</i> <i>V</i>(<i>X</i>), σ(<i>S</i><sub><i>n</i></sub>) = √<i>n</i> σ(<i>X</i>).</li>
+        <li>Un dé : <i>E</i>(<i>X</i>) = 3,5 et <i>V</i>(<i>X</i>) = 35/12 ≈ 2,92.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="sommes-va.js"></script>
+</body>
+</html>
