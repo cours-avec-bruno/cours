@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fonctions sinus et cosinus</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Fonctions sinus et cosinus</h1>
+    <p class="sub">On mesure la pente de la courbe de sinus en chaque point et on la reporte en dessous : on retrouve cosinus.</p>
+
+    <div class="row" id="fns" style="margin:28px 0 10px"></div>
+    <p class="explain" id="explain" style="min-height:3.4em"></p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Courbe de la fonction, tangente mobile et tracé de sa pente"></canvas></figure>
+    <div class="legend" id="legend"></div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Faire avancer x</button>
+          <input type="range" id="x" min="-3.14159" max="6.28318" step="0.01" aria-label="Abscisse x">
+        </div>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k"><i>x</i></span><span class="v" id="r-x"></span></div>
+        <div class="ro"><span class="k" id="k-f"></span><span class="v" id="r-f"></span></div>
+        <div class="ro"><span class="k">pente de la tangente</span><span class="v" id="r-p"></span></div>
+        <div class="big" id="res" style="margin-top:14px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <ul>
+        <li>La dérivée d’une fonction, c’est la pente de sa tangente, point par point. Pour sinus, cette pente dessine exactement la courbe de cosinus : sin′ = cos.</li>
+        <li>Pour cosinus, la pente dessine la courbe de sinus retournée : cos′ = −sin.</li>
+      </ul>
+      <h3>À retenir</h3>
+      <ul>
+        <li>sin et cos sont <b>2π-périodiques</b> : sin(<i>x</i> + 2π) = sin <i>x</i> et cos(<i>x</i> + 2π) = cos <i>x</i>. La courbe se répète tous les 2π.</li>
+        <li>cos est <b>paire</b> : cos(−<i>x</i>) = cos <i>x</i> (courbe symétrique par rapport à l’axe des ordonnées).
+          sin est <b>impaire</b> : sin(−<i>x</i>) = −sin <i>x</i> (courbe symétrique par rapport à l’origine).</li>
+        <li>sin′ = cos · cos′ = −sin · et pour <i>u</i> dérivable : (sin <i>u</i>)′ = <i>u</i>′ cos <i>u</i>, (cos <i>u</i>)′ = −<i>u</i>′ sin <i>u</i>.</li>
+        <li>lim<sub><i>x</i>→0</sub> sin <i>x</i> / <i>x</i> = 1 : c’est le nombre dérivé de sin en 0, la pente 1 = cos 0. Près de 0, la courbe de sin se confond avec la droite <i>y</i> = <i>x</i>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="trigo.js"></script>
+</body>
+</html>

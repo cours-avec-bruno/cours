@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primitives et équations différentielles</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>.fig canvas { cursor: crosshair; }</style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Primitives et équations différentielles</h1>
+    <p class="sub">L’équation donne la pente en chaque point du plan : une solution est une courbe qui suit les petits segments.</p>
+
+    <div class="row" id="eqs" style="margin:28px 0 10px"></div>
+    <p class="explain" id="explain" style="min-height:3.4em"></p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Champ de directions et courbes solutions"></canvas></figure>
+    <div class="legend" id="legend"></div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn" id="clear">Effacer les courbes</button>
+        </div>
+        <p class="note" style="color:var(--muted)">Clique n’importe où sur la figure pour choisir le point de départ (<i>x</i><sub>0</sub> ; <i>y</i><sub>0</sub>) : la solution qui passe par ce point se dessine.</p>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k">Toutes les solutions</span><span class="v" id="r-gen"></span></div>
+        <div class="ro"><span class="k">Point de départ</span><span class="v" id="r-pt"></span></div>
+        <div class="ro"><span class="k">Constante</span><span class="v" id="r-c"></span></div>
+        <div class="big" id="res" style="margin-top:14px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <ul>
+        <li>Une équation différentielle <i>y</i>′ = … donne, en chaque point du plan, la <b>pente</b> que doit avoir la solution qui y passe. Le champ de petits segments la dessine.</li>
+        <li>Une solution est une courbe tangente au champ partout. Par chaque point de départ passe <b>une seule</b> solution.</li>
+      </ul>
+      <h3>À retenir</h3>
+      <ul>
+        <li><i>F</i> est une primitive de <i>f</i> sur <i>I</i> si <i>F</i>′ = <i>f</i>. Deux primitives diffèrent d’une constante : toutes les primitives sont <i>F</i>(<i>x</i>) + <i>C</i>.</li>
+        <li><i>y</i>′ = <i>ay</i> : les solutions sont les fonctions <i>x</i> ↦ <i>C</i> e<sup><i>ax</i></sup>.</li>
+        <li><i>y</i>′ = <i>ay</i> + <i>b</i> (<i>a</i> ≠ 0) : les solutions sont <i>x</i> ↦ <i>C</i> e<sup><i>ax</i></sup> − <i>b</i>/<i>a</i>. La fonction constante −<i>b</i>/<i>a</i> est la solution « d’équilibre ».</li>
+        <li>Une condition initiale <i>y</i>(<i>x</i><sub>0</sub>) = <i>y</i><sub>0</sub> fixe la constante <i>C</i> : il reste une seule solution.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="primitives.js"></script>
+</body>
+</html>

@@ -89,9 +89,9 @@ em { font-size: 1.06em; }
 .fig.drag canvas { touch-action: none; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 10px 2px 0; font-size: 13px; color: var(--muted); }
-.legend span { display: inline-flex; align-items: center; gap: 7px; }
-.legend i.sw { display: inline-block; width: 16px; height: 4px; border-radius: 2px; }
-.legend i.box { display: inline-block; width: 12px; height: 12px; border-radius: 2px; }
+.legend > span { display: inline-block; }
+.legend i.sw { display: inline-block; width: 16px; height: 4px; border-radius: 2px; margin-right: 7px; vertical-align: middle; }
+.legend i.box { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 7px; vertical-align: middle; }
 
 .panel { display: grid; grid-template-columns: 1.35fr 1fr; gap: 32px; margin-top: 26px; }
 @media (max-width: 860px) { .panel { grid-template-columns: 1fr; } }
