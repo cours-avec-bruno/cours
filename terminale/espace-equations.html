@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Représentations paramétriques et équations cartésiennes</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .vec { position: relative; display: inline-block; line-height: 1; padding-top: .32em; }
+    .vec::before { content: ""; position: absolute; left: .06em; right: .16em; top: .12em; border-top: 1.1px solid currentColor; }
+    .vec::after { content: ""; position: absolute; right: 0; top: calc(.12em - .16em + .5px); border-style: solid; border-width: .16em 0 .16em .3em; border-color: transparent transparent transparent currentColor; }
+    .vec i { font-family: var(--math); font-style: italic; font-size: 1.06em; }
+    .legend span.t { display: inline; }
+    .legend .vec { display: inline-block; }
+    .eqs { display: flex; flex-wrap: wrap; gap: 14px 48px; align-items: center; margin: 24px 0 18px; font-family: var(--math); font-size: 19px; }
+    .eqs i { font-style: italic; }
+    .sys { display: inline-flex; align-items: center; gap: 8px; }
+    .sys .br { font-size: 64px; line-height: 1; font-weight: 200; color: var(--muted); transform: scaleX(.6); }
+    .sys .lines { line-height: 1.45; }
+    .eqs .k { font-family: var(--font); font-size: 14px; color: var(--muted); margin-right: 6px; }
+  </style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Représentations paramétriques et équations cartésiennes</h1>
+    <p class="sub">Un point qui avance sur une droite et traverse un plan.</p>
+
+    <div class="eqs">
+      <span class="sys"><span class="k">Droite <i>d</i></span><span class="br">{</span>
+        <span class="lines"><i>x</i> = 3 − <i>t</i><br><i>y</i> = <i>t</i><br><i>z</i> = 3 − <i>t</i></span>
+        <span class="k" style="margin-left:8px">(<i>t</i> ∈ ℝ)</span></span>
+      <span><span class="k">Plan <i>P</i></span>2<i>x</i> + <i>y</i> + 2<i>z</i> − 6 = 0</span>
+    </div>
+    <p class="explain" style="min-height:3.4em">
+      La droite <i>d</i> passe par <i>A</i>(3 ; 0 ; 3) et elle est dirigée par <span class="vec"><i>u</i></span>(−1 ; 1 ; −1) : le paramètre <i>t</i> joue le rôle du temps,
+      et <i>M</i>(<i>t</i>) avance de <span class="vec"><i>u</i></span> à chaque unité de temps. Le plan <i>P</i> a pour vecteur normal <span class="vec"><i>n</i></span>(2 ; 1 ; 2).
+      En chaque position, on calcule 2<i>x</i> + <i>y</i> + 2<i>z</i> − 6 : son signe dit de quel côté du plan se trouve <i>M</i>.
+    </p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Droite d, plan P et point M(t)"></canvas></figure>
+    <div class="legend">
+      <span><i class="box" style="background:var(--cos);border-radius:50%"></i>côté de <em>O</em> (valeur &lt; 0)</span>
+      <span><i class="box" style="background:var(--sin);border-radius:50%"></i>autre côté (valeur &gt; 0)</span>
+      <span><i class="box" style="background:var(--arc);border-radius:50%"></i>sur le plan (valeur = 0)</span>
+      <span class="muted">Glisse sur la figure pour la faire tourner.</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row"><button class="btn primary" id="play">▶ Faire avancer M</button></div>
+        <div class="row"><span class="label">Paramètre <em>t</em></span><input type="range" id="t" min="-1" max="4" step="0.1"><output id="tv"></output></div>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k"><i>M</i>(<i>t</i>)</span><span class="v" id="r-m"></span></div>
+        <div class="big" id="val" style="margin-top:14px;font-size:19px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <p>Pour trouver où <i>d</i> traverse <i>P</i>, on cherche l’instant <i>t</i> où l’équation du plan est vérifiée :
+        on remplace <i>x</i>, <i>y</i>, <i>z</i> par leurs expressions en <i>t</i>.</p>
+      <p><span class="mx" style="font-size:18px">2(3 − <i>t</i>) + <i>t</i> + 2(3 − <i>t</i>) − 6 = 0 &nbsp;⇔&nbsp; 6 − 3<i>t</i> = 0 &nbsp;⇔&nbsp; <i>t</i> = 2</span>,
+        d’où le point d’intersection <i>I</i>(1 ; 2 ; 1).</p>
+      <h3>À retenir</h3>
+      <ul>
+        <li>Représentation paramétrique : <i>M</i> ∈ <i>d</i> ⇔ <span class="vec"><i>AM</i></span> = <i>t</i> <span class="vec"><i>u</i></span>. Chaque coordonnée de <i>M</i> vaut « coordonnée de <i>A</i> + <i>t</i> × coordonnée de <span class="vec"><i>u</i></span> ».</li>
+        <li>Équation cartésienne : un plan de vecteur normal <span class="vec"><i>n</i></span>(<i>a</i> ; <i>b</i> ; <i>c</i>) a une équation <i>ax</i> + <i>by</i> + <i>cz</i> + <i>d</i> = 0.</li>
+        <li>Intersection droite-plan : on remplace <i>x</i>, <i>y</i>, <i>z</i> dans l’équation du plan et on résout en <i>t</i>.</li>
+        <li>Si <span class="vec"><i>n</i></span> · <span class="vec"><i>u</i></span> = 0, la droite est parallèle au plan : pas de solution unique (aucune, ou la droite est incluse dans le plan).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="../assets/js/espace.js"></script>
+  <script src="espace-equations.js"></script>
+</body>
+</html>
