@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Continuité et valeurs intermédiaires</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .legend .t { display: inline; }
+    #dtable th { font-family: var(--font); font-style: normal; font-size: 13px; color: var(--muted); }
+    #dtable td { text-align: left; }
+  </style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Continuité et valeurs intermédiaires</h1>
+    <p class="sub">Une courbe tracée sans lever le crayon, qui va de la hauteur <em>f</em>(<em>a</em>) à la hauteur <em>f</em>(<em>b</em>), passe forcément par toutes les hauteurs intermédiaires.</p>
+
+    <div class="row" id="cases" style="margin:28px 0 10px"></div>
+    <p class="explain" id="explain" style="min-height:3.4em"></p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Courbe de f et droite horizontale y = k"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--text)"></i><span class="t">courbe de <em>f</em> sur [<em>a</em> ; <em>b</em>]</span></span>
+      <span><i class="sw" style="background:var(--arc)"></i><span class="t">valeurs entre <em>f</em>(<em>a</em>) et <em>f</em>(<em>b</em>)</span></span>
+      <span><i class="sw" style="background:var(--cos)"></i><span class="t">droite <em>y</em> = <em>k</em></span></span>
+      <span><i class="box" style="background:var(--sin);border-radius:50%"></i><span class="t">solutions de <em>f</em>(<em>x</em>) = <em>k</em></span></span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Faire monter <em>k</em></button>
+        </div>
+        <div class="row"><span class="label">Hauteur <em>k</em></span><input type="range" id="k" min="-1.4" max="5.4" step="0.01"><output id="kv"></output></div>
+      </div>
+      <div class="readout">
+        <div class="big" id="res" style="font-size:18px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <h2>Trouver la solution : la dichotomie</h2>
+    <p class="explain" style="margin-top:12px">
+      L’équation <i>x</i>³ + <i>x</i> − 1 = 0 a une seule solution α dans [0 ; 1] : la fonction <i>g</i> : <i>x</i> ↦ <i>x</i>³ + <i>x</i> − 1
+      est continue, strictement croissante, négative en 0 et positive en 1. Pour l’encadrer, on coupe l’intervalle en deux et on garde la moitié où le signe change.
+    </p>
+    <figure class="fig"><canvas id="dic" aria-label="Encadrement de la solution par dichotomie"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--cos)"></i><span class="t">encadrement de α</span></span>
+      <span><i class="box" style="background:var(--sin);border-radius:50%"></i><span class="t">borne où <em>g</em> &lt; 0</span></span>
+      <span><i class="box" style="background:var(--arc);border-radius:50%"></i><span class="t">borne où <em>g</em> &gt; 0</span></span>
+    </div>
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="cut">✂ Couper en deux</button>
+          <button class="btn" id="restart">Recommencer</button>
+        </div>
+        <p class="note" id="dmsg"></p>
+      </div>
+      <div class="readout">
+        <table class="terms htable" id="dtable"></table>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <ul>
+        <li><b>Théorème des valeurs intermédiaires.</b> Si <i>f</i> est continue sur [<i>a</i> ; <i>b</i>], alors pour tout réel <i>k</i> compris entre
+          <i>f</i>(<i>a</i>) et <i>f</i>(<i>b</i>), l’équation <i>f</i>(<i>x</i>) = <i>k</i> admet <b>au moins une</b> solution dans [<i>a</i> ; <i>b</i>].</li>
+        <li><b>Corollaire.</b> Si de plus <i>f</i> est <b>strictement monotone</b> sur [<i>a</i> ; <i>b</i>], cette solution est <b>unique</b>.</li>
+      </ul>
+      <h3>À retenir</h3>
+      <ul>
+        <li>Sans continuité, le théorème tombe : la courbe peut « sauter » par-dessus la valeur <i>k</i>.</li>
+        <li>Si <i>k</i> n’est pas entre <i>f</i>(<i>a</i>) et <i>f</i>(<i>b</i>), le théorème ne dit rien : il peut y avoir des solutions… ou pas.</li>
+        <li>Le théorème prouve que la solution existe, sans donner sa valeur : on l’encadre par dichotomie (ou par balayage à la calculatrice).
+          À chaque étape, l’amplitude de l’encadrement est divisée par 2.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="continuite.js"></script>
+</body>
+</html>

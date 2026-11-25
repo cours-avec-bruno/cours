@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dérivation et convexité</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>.legend .t { display: inline; }</style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Dérivation et convexité</h1>
+    <p class="sub">On fait glisser la tangente le long de la courbe : là où elle tourne vers la gauche (sa pente augmente), la courbe est convexe.</p>
+
+    <p class="explain" style="margin-top:24px">
+      <i>f</i>(<i>x</i>) = <i>x</i>³ − 3<i>x</i>. En haut, la tangente au point <i>A</i> d’abscisse <i>a</i> ; en bas, sa pente <i>f</i> ′(<i>a</i>).
+      Quand la courbe est <b>au-dessus</b> de ses tangentes (<b>convexe</b>), la pente augmente ; quand elle est <b>en dessous</b> (<b>concave</b>), la pente diminue.
+    </p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Courbe de f, tangente mobile et graphe de la dérivée"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--sin)"></i>partie concave</span>
+      <span><i class="sw" style="background:var(--cos)"></i>partie convexe</span>
+      <span><i class="sw" style="background:var(--arc)"></i><span class="t">tangente en <em>A</em></span></span>
+      <span><i class="box" style="border:2px solid var(--text);border-radius:50%;width:11px;height:11px"></i>point d’inflexion</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Faire glisser la tangente</button>
+        </div>
+        <div class="row"><span class="label">Abscisse <em>a</em> du point <em>A</em></span><input type="range" id="a" min="-2" max="2" step="0.01"><output id="av"></output></div>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k">pente de la tangente <i>f</i> ′(<i>a</i>) = 3<i>a</i>² − 3</span><span class="v" id="r1"></span></div>
+        <div class="ro"><span class="k"><i>f</i> ″(<i>a</i>) = 6<i>a</i></span><span class="v" id="r2"></span></div>
+        <div class="big" id="res" style="margin-top:14px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <ul>
+        <li><i>f</i> est <b>convexe</b> sur un intervalle si sa courbe est <b>au-dessus de toutes ses tangentes</b> (et en dessous de ses cordes) ;
+          <b>concave</b> si elle est en dessous de ses tangentes.</li>
+        <li>Pour <i>f</i> deux fois dérivable : <i>f</i> convexe ⇔ <i>f</i> ′ croissante ⇔ <i>f</i> ″ ≥ 0.</li>
+        <li>Un <b>point d’inflexion</b> est un point où la courbe <b>traverse</b> sa tangente : <i>f</i> ″ s’y annule en changeant de signe.</li>
+      </ul>
+      <h3>À retenir</h3>
+      <ul>
+        <li>Ici <i>f</i> ′(<i>x</i>) = 3<i>x</i>² − 3 et <i>f</i> ″(<i>x</i>) = 6<i>x</i> : <i>f</i> est concave sur ]−∞ ; 0], convexe sur [0 ; +∞[, et O(0 ; 0) est un point d’inflexion.</li>
+        <li><i>x</i> ↦ <i>x</i>² et exp sont convexes sur ℝ ; <i>x</i> ↦ √<i>x</i> est concave sur [0 ; +∞[.</li>
+        <li>Si <i>f</i> est convexe, sa courbe est au-dessus de chaque tangente : <i>f</i>(<i>x</i>) ≥ <i>f</i>(<i>a</i>) + <i>f</i> ′(<i>a</i>)(<i>x</i> − <i>a</i>).
+          Par exemple e<sup><i>x</i></sup> ≥ <i>x</i> + 1 (tangente en 0).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="convexite.js"></script>
+</body>
+</html>
