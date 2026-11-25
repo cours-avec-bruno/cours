@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suites récurrentes et point fixe</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>.legend .t { display: inline; }</style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Suites récurrentes et point fixe</h1>
+    <p class="sub">Pour une suite définie par <em>u</em><sub><em>n</em>+1</sub> = <em>f</em>(<em>u</em><sub><em>n</em></sub>), on fabrique les termes en faisant des allers-retours entre la courbe de <em>f</em> et la droite <em>y</em> = <em>x</em>.</p>
+
+    <div class="row" id="cases" style="margin:28px 0 10px"></div>
+    <p class="explain" id="explain" style="min-height:3.4em">
+      On part de <i>u</i><sub>0</sub> sur l’axe des abscisses. On va <b>verticalement jusqu’à la courbe</b> : la hauteur atteinte est <i>u</i><sub>1</sub> = <i>f</i>(<i>u</i><sub>0</sub>).
+      Puis on va <b>horizontalement jusqu’à la droite <i>y</i> = <i>x</i></b>, qui renvoie <i>u</i><sub>1</sub> sur l’axe des abscisses. Et on recommence.
+    </p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Construction en escalier des termes de la suite"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--text)"></i><span class="t">courbe de <em>f</em></span></span>
+      <span><i class="sw" style="background:var(--muted)"></i><span class="t">droite <em>y</em> = <em>x</em></span></span>
+      <span><i class="sw" style="background:var(--cos)"></i>construction des termes</span>
+      <span><i class="box" style="border:2px solid var(--arc);border-radius:50%;width:11px;height:11px"></i><span class="t">point fixe : <em>f</em>(ℓ) = ℓ</span></span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Construire pas à pas</button>
+        </div>
+        <div class="row"><span class="label">Premier terme <em>u</em><sub>0</sub></span><input type="range" id="u0"><output id="u0v"></output></div>
+      </div>
+      <div class="readout">
+        <div class="big" id="formula"></div>
+        <p class="note" id="terms"></p>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <ul>
+        <li>Chaque terme se lit deux fois : comme une <b>hauteur</b> sur la courbe (<i>u</i><sub><i>n</i>+1</sub> = <i>f</i>(<i>u</i><sub><i>n</i></sub>)),
+          puis ramené sur l’axe des abscisses grâce à la droite <i>y</i> = <i>x</i>.</li>
+        <li>Si (<i>u</i><sub><i>n</i></sub>) converge vers ℓ et si <i>f</i> est continue, on passe à la limite dans <i>u</i><sub><i>n</i>+1</sub> = <i>f</i>(<i>u</i><sub><i>n</i></sub>) :
+          on obtient <b>ℓ = <i>f</i>(ℓ)</b>. La limite est l’abscisse d’un point d’intersection de la courbe et de la droite <i>y</i> = <i>x</i>.</li>
+      </ul>
+      <h3>À retenir</h3>
+      <ul>
+        <li>Les solutions de <i>f</i>(<i>x</i>) = <i>x</i> (les « points fixes ») sont les <b>seules limites possibles</b>.</li>
+        <li>Trouver un point fixe ne prouve pas que la suite converge : il faut d’abord montrer la convergence
+          (souvent : croissante et majorée, ou décroissante et minorée, établi par récurrence).</li>
+        <li>Toute suite croissante majorée converge ; toute suite décroissante minorée converge.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="suites-escalier.js"></script>
+</body>
+</html>

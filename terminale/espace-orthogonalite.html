@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orthogonalité et distances dans l’espace</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .vec { position: relative; display: inline-block; line-height: 1; padding-top: .32em; }
+    .vec::before { content: ""; position: absolute; left: .06em; right: .16em; top: .12em; border-top: 1.1px solid currentColor; }
+    .vec::after { content: ""; position: absolute; right: 0; top: calc(.12em - .16em + .5px); border-style: solid; border-width: .16em 0 .16em .3em; border-color: transparent transparent transparent currentColor; }
+    .vec i { font-family: var(--math); font-style: italic; font-size: 1.06em; }
+    .legend span.t { display: inline; }
+    .legend .vec { display: inline-block; }
+  </style>
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Orthogonalité et distances dans l’espace</h1>
+    <p class="sub">Le projeté orthogonal est le point du plan le plus proche.</p>
+
+    <p class="explain" style="margin-top:24px;min-height:3.4em">
+      <i>M</i> est un point hors du plan <i>P</i>. On descend de <i>M</i> perpendiculairement au plan : on arrive en <i>H</i>, le <b>projeté orthogonal</b> de <i>M</i> sur <i>P</i>.
+      La droite (<i>MH</i>) est dirigée par un vecteur normal <span class="vec"><i>n</i></span> du plan. Promène un autre point <i>N</i> du plan : peut-on faire plus court que <i>MH</i> ?
+    </p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Plan P, point M, son projeté orthogonal H et un point N du plan"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--arc)"></i>distance <em>MH</em></span>
+      <span><i class="sw" style="background:var(--sin)"></i>distance <em>MN</em></span>
+      <span><i class="sw" style="background:var(--cos)"></i><span class="t">vecteur normal <span class="vec"><i>n</i></span></span></span>
+      <span class="muted">Glisse sur la figure pour la faire tourner.</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row"><button class="btn primary" id="play">▶ Faire tourner N autour de H</button></div>
+        <div class="row"><span class="label">Distance <em>HN</em></span><input type="range" id="r" min="0" max="4" step="0.1"><output id="rv"></output></div>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k"><i>MH</i></span><span class="v"><b class="c-arc">3</b></span></div>
+        <div class="ro"><span class="k"><i>HN</i></span><span class="v" id="r-hn"></span></div>
+        <div class="ro"><span class="k"><i>MN</i></span><span class="v" id="r-mn"></span></div>
+        <div class="big" id="pyth" style="margin-top:14px;font-size:19px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <p>Le triangle <i>MHN</i> est rectangle en <i>H</i>, quel que soit le point <i>N</i> du plan. Par Pythagore,
+        <i>MN</i>² = <i>MH</i>² + <i>HN</i>² ≥ <i>MH</i>² : le chemin le plus court de <i>M</i> au plan, c’est celui qui tombe à angle droit.</p>
+      <h3>À retenir</h3>
+      <ul>
+        <li>Une droite est orthogonale à un plan si elle est orthogonale à <b>deux droites sécantes</b> de ce plan. Elle est alors orthogonale à toutes ses droites.</li>
+        <li><span class="vec"><i>n</i></span> est normal au plan quand <span class="vec"><i>n</i></span> · <span class="vec"><i>u</i></span> = 0 et <span class="vec"><i>n</i></span> · <span class="vec"><i>v</i></span> = 0 pour deux vecteurs directeurs non colinéaires <span class="vec"><i>u</i></span>, <span class="vec"><i>v</i></span> du plan.</li>
+        <li><i>H</i> est le projeté orthogonal de <i>M</i> sur <i>P</i> : <i>H</i> ∈ <i>P</i> et <span class="vec"><i>MH</i></span> est colinéaire à <span class="vec"><i>n</i></span>.</li>
+        <li>La distance de <i>M</i> au plan <i>P</i> est <i>MH</i> : c’est la plus petite des distances <i>MN</i> pour <i>N</i> ∈ <i>P</i>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="../assets/js/espace.js"></script>
+  <script src="espace-orthogonalite.js"></script>
+</body>
+</html>

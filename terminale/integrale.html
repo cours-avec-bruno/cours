@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calcul intégral</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Calcul intégral</h1>
+    <p class="sub">L’intégrale est l’aire sous la courbe : on l’encadre par des rectangles, puis on la regarde s’accumuler.</p>
+
+    <div class="tabs" id="tabs">
+      <button aria-pressed="true">Rectangles</button>
+      <button aria-pressed="false">L’aire qui s’accumule</button>
+    </div>
+    <p class="explain" id="explain"></p>
+
+    <figure class="fig" id="f1"><canvas id="fig1" aria-label="Aire sous la courbe de x² encadrée par des rectangles"></canvas></figure>
+    <figure class="fig" id="f2" hidden><canvas id="fig2" aria-label="Aire signée de 0 à x et courbe de F"></canvas></figure>
+    <div class="legend" id="legend"></div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row" id="row-n"><span class="label">Nombre de rectangles <em>n</em></span><input type="range" id="n" min="1" max="100" step="1"><output id="nv"></output></div>
+        <div class="row" id="row-x" hidden>
+          <button class="btn primary" id="play">▶ Faire avancer x</button>
+          <input type="range" id="x" min="0" max="5" step="0.01" aria-label="Borne x">
+        </div>
+      </div>
+      <div class="readout">
+        <div id="rows"></div>
+        <div class="big" id="res" style="margin-top:14px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <ul>
+        <li>Pour <i>f</i> positive, ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>) d<i>x</i> est l’aire sous la courbe. Les sommes de rectangles l’encadrent, et l’écart tend vers 0 quand <i>n</i> augmente.</li>
+        <li>La fonction <i>F</i>(<i>x</i>) = ∫<sub><i>a</i></sub><sup><i>x</i></sup> <i>f</i>(<i>t</i>) d<i>t</i> mesure l’aire accumulée depuis <i>a</i> : elle monte quand <i>f</i> &gt; 0, descend quand <i>f</i> &lt; 0. C’est la primitive de <i>f</i> qui s’annule en <i>a</i> : <i>F</i>′ = <i>f</i>.</li>
+      </ul>
+      <h3>À retenir</h3>
+      <ul>
+        <li>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>) d<i>x</i> = <i>F</i>(<i>b</i>) − <i>F</i>(<i>a</i>), pour n’importe quelle primitive <i>F</i> de <i>f</i>.</li>
+        <li>Là où <i>f</i> est négative, l’aire compte <b>en négatif</b> : l’intégrale est une aire « signée ».</li>
+        <li>Relation de Chasles : ∫<sub><i>a</i></sub><sup><i>b</i></sup> + ∫<sub><i>b</i></sub><sup><i>c</i></sup> = ∫<sub><i>a</i></sub><sup><i>c</i></sup> · linéarité · si <i>f</i> ≥ 0 sur [<i>a</i> ; <i>b</i>] (<i>a</i> ≤ <i>b</i>), l’intégrale est positive.</li>
+        <li>Valeur moyenne de <i>f</i> sur [<i>a</i> ; <i>b</i>] : 1/(<i>b</i> − <i>a</i>) × ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>) d<i>x</i>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="integrale.js"></script>
+</body>
+</html>

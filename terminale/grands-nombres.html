@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Concentration et loi des grands nombres</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <a class="crumb" href="../">← Chapitres</a>
+    <h1>Concentration et loi des grands nombres</h1>
+    <p class="sub">Plus on lance le dé, plus la moyenne des résultats se resserre autour de 3,5 : l’entonnoir se referme.</p>
+
+    <p class="explain" style="margin-top:24px">
+      Chaque courbe est un échantillon : on lance un dé <em>n</em> fois et on suit la moyenne
+      <em>M</em><sub><em>n</em></sub> = (<em>X</em><sub>1</sub> + … + <em>X</em><sub><em>n</em></sub>) / <em>n</em>.
+      Au début, les 20 courbes partent dans tous les sens ; ensuite, elles se concentrent toutes autour de
+      l’espérance μ = 3,5.
+    </p>
+
+    <figure class="fig"><canvas id="fig" aria-label="Moyennes de 20 échantillons en fonction de n"></canvas></figure>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--cos)"></i><b style="font-weight:400">moyenne <em>M</em><sub><em>n</em></sub> d’un échantillon</b></span>
+      <span><i class="box" style="background:rgba(43,147,72,.15)"></i>bande ]μ − δ ; μ + δ[</span>
+      <span><i class="box" style="background:var(--sin);border-radius:50%"></i><b style="font-weight:400">hors de la bande au rang <em>n</em></b></span>
+      <span class="muted">Abscisses dilatées au début (1, 10, 100, 1 000 également espacés).</span>
+    </div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="row">
+          <button class="btn primary" id="play">▶ Lancer 20 échantillons</button>
+        </div>
+        <div class="row"><span class="label">Rang <em>n</em></span><input type="range" id="s" min="0" max="1000" step="1"><output id="nv"></output></div>
+        <div class="row"><span class="label">Écart δ</span><input type="range" id="d" min="0.1" max="1.5" step="0.05"><output id="dv"></output></div>
+      </div>
+      <div class="readout">
+        <div class="ro"><span class="k">Échantillons hors de la bande</span><span class="v" id="r-out"></span></div>
+        <div class="ro"><span class="k">Majoration de Bienaymé-Tchebychev</span><span class="v" id="r-bt"></span></div>
+        <div class="big" id="res" style="font-size:18px;margin-top:14px"></div>
+        <p class="note" id="msg"></p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h3>L’idée</h3>
+      <p>La moyenne <i>M</i><sub><i>n</i></sub> a la même espérance qu’un lancer, μ = 3,5, mais sa variance est divisée par <i>n</i> :
+        <i>V</i>(<i>M</i><sub><i>n</i></sub>) = <i>V</i>(<i>X</i>)/<i>n</i>. Elle est donc de moins en moins dispersée autour de μ.</p>
+      <h3>À retenir</h3>
+      <ul>
+        <li>Inégalité de Bienaymé-Tchebychev : <i>P</i>(|<i>X</i> − <i>E</i>(<i>X</i>)| ≥ δ) ≤ <i>V</i>(<i>X</i>)/δ².</li>
+        <li>Inégalité de concentration : <i>P</i>(|<i>M</i><sub><i>n</i></sub> − μ| ≥ δ) ≤ <i>V</i>(<i>X</i>)/(<i>n</i>δ²).</li>
+        <li>Loi des grands nombres : pour tout δ &gt; 0, <i>P</i>(|<i>M</i><sub><i>n</i></sub> − μ| ≥ δ) tend vers 0 quand <i>n</i> tend vers +∞.</li>
+        <li>La majoration est souvent grossière (et vaut parfois plus que 1), mais elle suffit à montrer que la probabilité tend vers 0.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/fig.js"></script>
+  <script src="grands-nombres.js"></script>
+</body>
+</html>
